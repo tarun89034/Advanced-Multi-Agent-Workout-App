@@ -1,0 +1,44 @@
+
+services:
+  edge:
+    image: nginx:1.25-alpine
+    container_name: ai_workflow_edge
+    depends_on:
+      - app
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: unless-stopped
+
+  app:
+    build: .
+    container_name: ai_workflow_app
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    environment:
+      - ENVIRONMENT=production
+      
+  # Example Langflow local instance (optional, for fully local execution)
+  langflow:
+    image: langflowai/langflow:latest
+    container_name: langflow_local
+    volumes:
+      - langflow_data:/home/langflow/.langflow
+    restart: unless-stopped
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: ai_workflow_tunnel
+    depends_on:
+      - edge
+      - langflow
+    command: tunnel run --config /etc/cloudflared/config.yml ai-workflow-tunnel
+    volumes:
+      - ./cloudflared/config.yml:/etc/cloudflared/config.yml:ro
+      - ./cloudflared/ai-workflow-tunnel.json:/etc/cloudflared/ai-workflow-tunnel.json:ro
+    restart: unless-stopped
+
+volumes:
+  langflow_data:

@@ -1,0 +1,9 @@
+tunnel: ai-workflow-tunnel
+credentials-file: /etc/cloudflared/ai-workflow-tunnel.json
+
+ingress:
+  - hostname: ai-workflow.your-domain.com
+    service: http://edge:8080
+  - hostname: langflow.your-domain.com
+    service: http://langflow:7860
+  - service: http_status:404
