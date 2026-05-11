@@ -20,12 +20,31 @@ def personal_data_form():
         st.subheader("Profile")
         profile = st.session_state.profile
 
-        name = st.text_input("Name", value=profile["general"].get("name", ""))
-        age = st.number_input("Age", min_value=1, max_value=120, step=1, value=profile["general"].get("age", 25))
-        weight = st.number_input("Weight (kg)", min_value=0.0, max_value=300.0, step=0.1, value=float(profile["general"].get("weight", 70.0)))
-        height = st.number_input("Height (cm)", min_value=0.0, max_value=250.0, step=0.1, value=float(profile["general"].get("height", 170.0)))
+        name = st.text_input("Name", value=profile["general"].get("name", ""), key="profile_name")
+        age = st.number_input("Age", min_value=1, max_value=120, step=1, value=profile["general"].get("age", 25), key="profile_age")
+        weight = st.number_input(
+            "Weight (kg)",
+            min_value=0.0,
+            max_value=300.0,
+            step=0.1,
+            value=float(profile["general"].get("weight", 70.0)),
+            key="profile_weight",
+        )
+        height = st.number_input(
+            "Height (cm)",
+            min_value=0.0,
+            max_value=250.0,
+            step=0.1,
+            value=float(profile["general"].get("height", 170.0)),
+            key="profile_height",
+        )
         genders = ["Male", "Female", "Other"]
-        gender = st.radio("Gender", genders, index=genders.index(profile["general"].get("gender", "Male")))
+        gender = st.radio(
+            "Gender",
+            genders,
+            index=genders.index(profile["general"].get("gender", "Male")),
+            key="profile_gender",
+        )
         activities = [
             "Sedentary",
             "Lightly Active",
@@ -37,6 +56,7 @@ def personal_data_form():
             "Activity Level",
             activities,
             index=activities.index(profile["general"].get("activity_level", "Sedentary")),
+            key="profile_activity_level",
         )
 
         if st.form_submit_button("Save Profile"):
@@ -62,6 +82,7 @@ def goals_form():
             "Select your goals",
             ["Muscle Gain", "Fat Loss", "Stay Active"],
             default=profile.get("goals", ["Muscle Gain"]),
+            key="profile_goals",
         )
 
         if st.form_submit_button("Save Goals"):
@@ -91,13 +112,37 @@ def macros():
     with st.form("nutrition_form"):
         col_a, col_b, col_c, col_d = st.columns(4)
         with col_a:
-            calories = st.number_input("Calories", min_value=0, step=1, value=profile["nutrition"].get("calories", 0))
+            calories = st.number_input(
+                "Calories",
+                min_value=0,
+                step=1,
+                value=profile["nutrition"].get("calories", 0),
+                key="nutrition_calories",
+            )
         with col_b:
-            protein = st.number_input("Protein (g)", min_value=0, step=1, value=profile["nutrition"].get("protein", 0))
+            protein = st.number_input(
+                "Protein (g)",
+                min_value=0,
+                step=1,
+                value=profile["nutrition"].get("protein", 0),
+                key="nutrition_protein",
+            )
         with col_c:
-            fat = st.number_input("Fat (g)", min_value=0, step=1, value=profile["nutrition"].get("fat", 0))
+            fat = st.number_input(
+                "Fat (g)",
+                min_value=0,
+                step=1,
+                value=profile["nutrition"].get("fat", 0),
+                key="nutrition_fat",
+            )
         with col_d:
-            carbs = st.number_input("Carbs (g)", min_value=0, step=1, value=profile["nutrition"].get("carbs", 0))
+            carbs = st.number_input(
+                "Carbs (g)",
+                min_value=0,
+                step=1,
+                value=profile["nutrition"].get("carbs", 0),
+                key="nutrition_carbs",
+            )
 
         if st.form_submit_button("Save Targets"):
             st.session_state.profile = update_personal_info(
@@ -124,7 +169,7 @@ def notes():
                 st.session_state.notes.pop(i)
                 st.rerun()
 
-    new_note = st.text_input("Add a new note")
+    new_note = st.text_input("Add a new note", key="notes_new")
     if st.button("Add Note"):
         if new_note:
             note = add_note(new_note, st.session_state.profile_id)
@@ -135,7 +180,7 @@ def notes():
 @st.fragment()
 def ask_ai_func():
     st.subheader("Ask AI")
-    user_question = st.text_area("Ask a question", height=120)
+    user_question = st.text_area("Ask a question", height=120, key="ask_question")
     if st.button("Ask AI", type="primary"):
         with st.spinner("Thinking..."):
             result = ask_ai(st.session_state.profile, user_question)

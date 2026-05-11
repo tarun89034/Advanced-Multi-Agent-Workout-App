@@ -86,7 +86,7 @@ def _run_async(coro):
 
 def get_macros(profile, goals):
     logger.info("Requesting macro generation from AI...")
-    TWEAKS = {
+    tweaks = {
         "TextInput-PR5Jb": {
             "input_value": ", ".join(goals)
         },
@@ -94,9 +94,19 @@ def get_macros(profile, goals):
             "input_value": dict_to_string(profile)
         }
     }
-    
-    # Run async function via thread-safe wrapper
-    return _run_async(run_flow_async("", tweaks=TWEAKS, application_token=APPLICATION_TOKEN))
+
+    try:
+        result = run_flow_from_json(
+            flow="flows/Macro Flow.json",
+            input_value="message",
+            fallback_to_env_vars=True,
+            tweaks=tweaks,
+        )
+        output_text = result[0].outputs[0].results["text"].data["text"]
+        return json.loads(output_text)
+    except Exception as e:
+        logger.error(f"Error in get_macros: {e}")
+        return {"error": "Failed to fetch macros"}
 
 
 async def run_flow_async(message: str,
