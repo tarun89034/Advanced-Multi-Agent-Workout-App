@@ -20,7 +20,6 @@ def add_note(note, profile_id):
     new_note = {
         "user_id": profile_id,
         "text": note,
-        "$vectorize": note,
         "metadata": {"injested": datetime.now()},
     }
     result = notes_collection.insert_one(new_note)
