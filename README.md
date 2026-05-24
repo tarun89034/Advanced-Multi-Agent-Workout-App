@@ -1,6 +1,6 @@
 # Production-Ready AI Workflow Infrastructure
 
-Enterprise-grade multi-agent architecture powered by **Langflow**, **OpenRouter**, and **Z.ai GLM 4.5 Air**.
+Enterprise-grade multi-agent architecture powered by Langflow, OpenRouter, and Z.ai GLM 4.5 Air.
 
 Repository: https://github.com/tarun89034/Advanced-Multi-Agent-Workout-App
 
@@ -20,7 +20,7 @@ Users → Cloudflare CDN/WAF → Cloudflare Tunnel → Docker Container → Lang
 | Fallback   | `deepseek/deepseek-chat` | DeepSeek    | Paid |
 | Emergency  | `openai/gpt-4o-mini`     | OpenAI      | Paid |
 
-All models are routed through **OpenRouter** for multi-provider resilience and reduced vendor lock-in.
+All models are routed through OpenRouter for multi-provider resilience and reduced vendor lock-in.
 
 ---
 
@@ -73,7 +73,7 @@ Langflow (optional local instance) will be at `http://localhost:7860`.
 ## Infrastructure Features
 
 ### Security
-- Environment variable secrets management (`.env`)
+- Environment variable secrets management (.env)
 - Cloudflare Access zero-trust authentication
 - Rate limiting (60 req/min/IP)
 - HTTPS via Cloudflare Tunnel (hidden origin IP)
@@ -86,27 +86,27 @@ Langflow (optional local instance) will be at `http://localhost:7860`.
 
 ### Scalability
 - Dockerized deployment with health checks
-- Async HTTP via `httpx.AsyncClient`
+- Async HTTP via httpx.AsyncClient
 - OpenRouter model list caching (5-minute TTL)
 - Structured logging via Loguru + OpenTelemetry traces
 
 ### Observability
-- **LangSmith** — Prompt traces, tool usage, generation latency
-- **Sentry** — Exception catching, crash reports
-- **Grafana / Prometheus** — Docker metrics, tunnel health
-- **Loguru** — Rotating file logs (10 MB / 10 days retention)
+- LangSmith — Prompt traces, tool usage, generation latency
+- Sentry — Exception catching, crash reports
+- Grafana / Prometheus — Docker metrics, tunnel health
+- Loguru — Rotating file logs (10 MB / 10 days retention)
 
 ---
 
 ## Cloudflare Deployment
 
-1. Install `cloudflared`: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/
-2. Authenticate: `cloudflared tunnel login`
-3. Create tunnel: `cloudflared tunnel create ai-workflow`
-4. Route: `cloudflared tunnel route dns ai-workflow your-domain.com`
-5. Run: `cloudflared tunnel run ai-workflow`
+1. Install cloudflared: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/
+2. Authenticate: cloudflared tunnel login
+3. Create tunnel: cloudflared tunnel create ai-workflow
+4. Route: cloudflared tunnel route dns ai-workflow your-domain.com
+5. Run: cloudflared tunnel run ai-workflow
 
-> **Important:** Never expose Docker ports directly. All traffic must flow through the Cloudflare Tunnel.
+> Important: Never expose Docker ports directly. All traffic must flow through the Cloudflare Tunnel.
 
 ---
 
