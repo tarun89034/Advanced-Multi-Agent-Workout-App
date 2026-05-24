@@ -1,115 +1,552 @@
-# Production-Ready AI Workflow Infrastructure
+# Advanced Multi-Agent Workout App
 
-Enterprise-grade multi-agent architecture powered by Langflow, OpenRouter, and Z.ai GLM 4.5 Air.
+Enterprise-grade multi-agent AI infrastructure for personalized fitness, nutrition planning, and intelligent workout assistance.
 
-Repository: https://github.com/tarun89034/Advanced-Multi-Agent-Workout-App
-
----
-
-## Architecture
-
-```
-Users → Cloudflare CDN/WAF → Cloudflare Tunnel → Docker Container → Langflow → OpenRouter Node → Z.ai GLM 4.5 Air (free)
-```
-
-### Model Routing Strategy
-
-| Priority   | Model                    | Provider    | Cost |
-|------------|--------------------------|-------------|------|
-| Primary    | `z-ai/glm-4.5-air:free` | Z.ai        | Free |
-| Fallback   | `deepseek/deepseek-chat` | DeepSeek    | Paid |
-| Emergency  | `openai/gpt-4o-mini`     | OpenAI      | Paid |
-
-All models are routed through OpenRouter for multi-provider resilience and reduced vendor lock-in.
+Built using Streamlit, Langflow, OpenRouter, Astra DB, and Z.ai GLM 4.5 Air.
 
 ---
 
-## Quick Start
+# Overview
 
-### 1. Environment Setup
+This project is a sophisticated multi-agent AI application that helps users manage fitness profiles, nutrition goals, personal notes, and AI-generated workout recommendations through a production-ready AI orchestration stack.
+
+The system combines:
+
+* Langflow multi-agent orchestration
+* Retrieval-Augmented Generation (RAG)
+* Vector search with Astra DB
+* OpenRouter multi-provider model routing
+* Cloudflare-secured deployment
+* Dockerized infrastructure
+* Streamlit interactive frontend
+
+The platform is designed as a scalable, enterprise-oriented AI infrastructure layer for intelligent fitness and wellness applications.
+
+---
+
+# Architecture
+
+```text
+Users
+  ↓
+Cloudflare CDN / WAF
+  ↓
+Cloudflare Tunnel
+  ↓
+Docker Container
+  ↓
+Streamlit Frontend
+  ↓
+Langflow Multi-Agent Flows
+  ↓
+Custom OpenRouter Node
+  ↓
+AI Model Routing Layer
+  ├── Z.ai GLM 4.5 Air (Primary)
+  ├── DeepSeek Chat (Fallback)
+  └── GPT-4o Mini (Emergency)
+```
+
+---
+
+# Core Features
+
+## Multi-Agent AI Flows
+
+The application uses Langflow to orchestrate advanced multi-agent workflows capable of:
+
+* task routing between models
+* dynamic reasoning chains
+* tool-calling agents
+* prompt orchestration
+* fallback model switching
+* contextual retrieval workflows
+
+Langflow JSON flows are exported and executed locally or through API-driven inference pipelines.
+
+---
+
+## AI-Driven Personalization
+
+The platform automatically generates:
+
+* calorie targets
+* protein requirements
+* fat goals
+* carbohydrate targets
+* personalized workout recommendations
+
+based on:
+
+* user profile metrics
+* weight
+* height
+* activity level
+* fitness goals
+* nutrition objectives
+
+---
+
+## Conversational AI Assistant
+
+The built-in "Ask AI" assistant provides:
+
+* context-aware fitness advice
+* nutrition recommendations
+* workout guidance
+* profile-aware responses
+* semantic memory retrieval
+
+The assistant synthesizes:
+
+* user profile information
+* stored notes
+* retrieved vector memories
+* general fitness knowledge
+* AI reasoning chains
+
+through Langflow-powered tool-calling agents.
+
+---
+
+## Retrieval-Augmented Generation (RAG)
+
+The project implements a full RAG pipeline using Astra DB vector search.
+
+Capabilities include:
+
+* semantic note retrieval
+* persistent memory
+* vector similarity search
+* contextual AI responses
+* long-term user knowledge storage
+
+User notes are embedded and stored in Astra DB to provide memory-aware AI interactions.
+
+---
+
+## Dynamic Streamlit UI
+
+The frontend is built with Streamlit and includes:
+
+* interactive forms
+* persistent session state
+* profile management
+* nutrition dashboards
+* notes management
+* conversational AI interface
+* workflow visualization
+
+The UI is optimized for responsive interaction with real-time AI inference.
+
+---
+
+# AI Model Routing Strategy
+
+| Priority  | Model                    | Provider | Purpose                |
+| --------- | ------------------------ | -------- | ---------------------- |
+| Primary   | `z-ai/glm-4.5-air:free`  | Z.ai     | Primary inference      |
+| Fallback  | `deepseek/deepseek-chat` | DeepSeek | Reliability fallback   |
+| Emergency | `openai/gpt-4o-mini`     | OpenAI   | Critical recovery path |
+
+All providers are accessed through OpenRouter for:
+
+* provider abstraction
+* multi-model resilience
+* vendor independence
+* centralized API routing
+* simplified infrastructure management
+
+---
+
+# Technology Stack
+
+## Frontend
+
+* Streamlit
+
+## AI Orchestration
+
+* Langflow
+* LangChain
+
+## LLM Infrastructure
+
+* OpenRouter
+* Z.ai GLM 4.5 Air
+* DeepSeek
+* OpenAI GPT-4o Mini
+
+## Vector Database
+
+* Astra DB
+
+## Embeddings
+
+* Nvidia Embedding Models
+
+## Infrastructure
+
+* Docker
+* Docker Compose
+* Cloudflare Tunnel
+* Cloudflare WAF
+
+## Monitoring & Observability
+
+* LangSmith
+* Sentry
+* OpenTelemetry
+* Loguru
+* Grafana
+* Prometheus
+
+---
+
+# Repository Structure
+
+```text
+.
+├── main.py
+├── ai.py
+├── custom_components/
+│   └── openrouter_component.py
+├── flows/
+│   ├── AskAIV2.json
+│   └── Macro Flow.json
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+├── .env.example
+└── .gitignore
+```
+
+---
+
+# Infrastructure Features
+
+## Security
+
+### Environment Variable Secret Management
+
+Sensitive credentials are stored securely using environment variables.
+
+Supported secrets include:
+
+* OpenRouter API keys
+* Astra DB credentials
+* LangSmith tokens
+* Sentry DSNs
+
+---
+
+## Cloudflare Zero-Trust Deployment
+
+Infrastructure is protected using:
+
+* Cloudflare Tunnel
+* Cloudflare WAF
+* Cloudflare Access
+* HTTPS enforcement
+* hidden origin architecture
+
+---
+
+## Rate Limiting
+
+Production traffic protection includes:
+
+```text
+60 requests/minute/IP
+```
+
+to prevent abuse and excessive inference costs.
+
+---
+
+# Reliability Engineering
+
+## Automatic Retry Logic
+
+The AI inference pipeline includes:
+
+```text
+3x automatic retries
+```
+
+for transient failures and provider instability.
+
+---
+
+## Timeout Protection
+
+All inference requests are protected using:
+
+```text
+60-second request timeouts
+```
+
+to prevent hanging workflows and stalled agents.
+
+---
+
+## Streaming Responses
+
+Token streaming is enabled to reduce perceived latency and improve user experience.
+
+---
+
+## Multi-Provider Failover
+
+Inference automatically falls back across providers if upstream models fail or become unavailable.
+
+---
+
+# Scalability
+
+## Async AI Requests
+
+Inference is powered through:
+
+```python
+httpx.AsyncClient
+```
+
+to improve throughput and concurrency.
+
+---
+
+## Dockerized Deployment
+
+The platform supports containerized deployment using:
+
+* Docker
+* Docker Compose
+
+allowing consistent local and production environments.
+
+---
+
+## Cached Model Discovery
+
+OpenRouter model metadata is cached to reduce API overhead and improve Langflow responsiveness.
+
+---
+
+# Observability & Monitoring
+
+## LangSmith
+
+Tracks:
+
+* prompt traces
+* tool execution
+* chain latency
+* agent workflows
+
+---
+
+## Sentry
+
+Captures:
+
+* runtime exceptions
+* deployment failures
+* crash reports
+* infrastructure errors
+
+---
+
+## Grafana & Prometheus
+
+Provides infrastructure monitoring for:
+
+* Docker containers
+* AI service health
+* system metrics
+* Cloudflare tunnel health
+
+---
+
+## Structured Logging
+
+Loguru provides:
+
+* rotating log files
+* structured JSON logs
+* debugging traces
+* long-term retention
+
+Configuration:
+
+```text
+10 MB rotation
+10-day retention
+```
+
+---
+
+# Local Development Setup
+
+## 1. Clone Repository
+
+```bash
+git clone https://github.com/tarun89034/Advanced-Multi-Agent-Workout-App.git
+
+cd Advanced-Multi-Agent-Workout-App
+```
+
+---
+
+## 2. Create Environment Variables
 
 ```bash
 cp .env.example .env
-# Edit .env with your actual API keys
 ```
 
-### 2. Run Locally
+Populate `.env`:
+
+```env
+OPENROUTER_API_KEY=
+ASTRA_DB_API_ENDPOINT=
+ASTRA_DB_APPLICATION_TOKEN=
+LANGSMITH_API_KEY=
+SENTRY_DSN=
+```
+
+---
+
+## 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
+```
+
+---
+
+## 4. Run Streamlit App
+
+```bash
 streamlit run main.py
 ```
 
-### 3. Run with Docker
+Application URL:
+
+```text
+http://localhost:8501
+```
+
+Optional Langflow instance:
+
+```text
+http://localhost:7860
+```
+
+---
+
+# Docker Deployment
+
+## Build and Run
 
 ```bash
 docker-compose up --build
 ```
 
-The application will be available at `http://localhost:8501`.  
-Langflow (optional local instance) will be at `http://localhost:7860`.
+---
+
+# Langflow Integration
+
+The application uses Langflow as the orchestration layer for:
+
+* multi-agent workflows
+* AI routing
+* tool calling
+* prompt chains
+* RAG pipelines
+* conversational agents
+
+Flows are exported as JSON configurations and executed locally through Python integrations.
 
 ---
 
-## Project Structure
+# Astra DB Integration
 
-```
-├── main.py                          # Streamlit UI — enterprise infrastructure dashboard
-├── ai.py                            # Async AI inference with Langflow + OpenRouter
-├── custom_components/
-│   └── openrouter_component.py      # Custom Langflow node with fallback routing
-├── flows/
-│   ├── AskAIV2.json                 # Langflow agent flow
-│   └── Macro Flow.json              # Langflow macro generation flow
-├── Dockerfile                       # Containerized runtime
-├── docker-compose.yml               # Multi-service orchestration
-├── requirements.txt                 # Python dependencies
-├── .env.example                     # Environment variable template
-└── .gitignore                       # Security: excludes secrets & caches
-```
+Astra DB is configured with vectorization support to enable:
+
+* semantic retrieval
+* persistent memory
+* contextual AI responses
+* note embedding search
+
+The vector database powers the RAG memory system used by conversational agents.
 
 ---
 
-## Infrastructure Features
+# Engineering Notes
 
-### Security
-- Environment variable secrets management (.env)
-- Cloudflare Access zero-trust authentication
-- Rate limiting (60 req/min/IP)
-- HTTPS via Cloudflare Tunnel (hidden origin IP)
+## ImportError Resolution
 
-### Reliability
-- 3x automatic retries on transient failures
-- 60s request timeouts
-- Token streaming for reduced perceived latency
-- Multi-provider fallback model chain
+A previous import issue involving `create_profile` was resolved through:
 
-### Scalability
-- Dockerized deployment with health checks
-- Async HTTP via httpx.AsyncClient
-- OpenRouter model list caching (5-minute TTL)
-- Structured logging via Loguru + OpenTelemetry traces
+* clearing Python bytecode cache
+* rebuilding `profiles.py`
+* validating exports
+* verifying import paths
 
-### Observability
-- LangSmith — Prompt traces, tool usage, generation latency
-- Sentry — Exception catching, crash reports
-- Grafana / Prometheus — Docker metrics, tunnel health
-- Loguru — Rotating file logs (10 MB / 10 days retention)
+This eliminated stale cache corruption and restored clean runtime imports.
 
 ---
 
-## Cloudflare Deployment
+# Known Runtime Notes
 
-1. Install cloudflared: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/
-2. Authenticate: cloudflared tunnel login
-3. Create tunnel: cloudflared tunnel create ai-workflow
-4. Route: cloudflared tunnel route dns ai-workflow your-domain.com
-5. Run: cloudflared tunnel run ai-workflow
+Some third-party library warnings may appear during startup, including:
 
-> Important: Never expose Docker ports directly. All traffic must flow through the Cloudflare Tunnel.
+* `transformers` namespace warnings
+* `astrapy` SSL reuse notices
+* LangChain deprecation warnings
+
+These warnings are upstream dependency notices and do not affect application functionality.
 
 ---
 
-## License
+# Future Improvements
 
-MIT
+Planned upgrades include:
+
+* Kubernetes deployment support
+* distributed inference workers
+* persistent conversation history
+* advanced RAG pipelines
+* CI/CD automation
+* multi-user authentication
+* RBAC permissions
+* production analytics dashboards
+* model performance benchmarking
+
+---
+
+# License
+
+This project is intended for educational, research, and experimental AI infrastructure purposes.
+
+---
+
+# Acknowledgements
+
+Built using:
+
+* Langflow
+* LangChain
+* OpenRouter
+* Streamlit
+* Astra DB
+* Cloudflare
+* OpenTelemetry
+
+---
+
+# Repository
+
+GitHub Repository:
+
+https://github.com/tarun89034/Advanced-Multi-Agent-Workout-App
