@@ -4,6 +4,10 @@ Enterprise-grade multi-agent AI infrastructure for personalized fitness, nutriti
 
 Built using Streamlit, Langflow, OpenRouter, Astra DB, and Z.ai GLM 4.5 Air.
 
+Demo Video
+
+https://res.cloudinary.com/dgbobo43l/video/upload/v1784119929/ai-workout-multiagent_nhbbn2.mp4
+
 ---
 
 # Overview
