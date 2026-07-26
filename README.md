@@ -548,9 +548,3 @@ Built using:
 * OpenTelemetry
 
 ---
-
-# Repository
-
-GitHub Repository:
-
-https://github.com/tarun89034/Advanced-Multi-Agent-Workout-App
